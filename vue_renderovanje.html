@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Templates</title>
+</head>
+<body>
+    <div id="container">
+        <!-- v-model => dvosmerno povezivanje sa svojstvom adult -->
+        <input type="checkbox" id="age" v-model="adult"> <label for="age">I am over 18 years old.</label>
+        <!-- v-if => direktiva za renderovanje, omogucava da se renderuje u zavisnosti od vrednosti svojstva -->
+        <div v-show="adult">
+            Your are over 18 years old.
+        </div>
+        <!-- v-else,navodi se nakon if -->
+        <div v-else>Oh no, you are under 18.</div>
+    </div>
+
+
+    <!-- Proveravanje i dinamicko generisanje -->
+    <div id="container1">
+        <input type="text" v-model="age" placeholder="enter your age...">
+     
+        <div v-if="age > 0 && age < 18">
+            You are adolescent.
+        </div>
+        <div v-else-if="age >= 18 && age < 65">
+            You are adult.
+        </div>
+        <div v-else-if="age >= 65">
+            You are senior.
+        </div>
+        <div v-else>Invalid value.</div>
+    </div>
+
+    <script src="vue.js"></script>
+
+    <script>
+       var user = {
+        name: "Ben Torrance",
+        adult: false
+       };
+
+       var vm = new Vue({
+        el: '#container',
+        data: user
+       })
+
+
+       var data = {
+        name: "Ben Torrance",
+        age: undefined
+    };
+ 
+    var vm = new Vue({
+        el: '#container1',
+        data: data
+    })
+    </script>
+  
+</body>
+</html>
