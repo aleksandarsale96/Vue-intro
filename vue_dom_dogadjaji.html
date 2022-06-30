@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="container">
+        <!-- onclick generate-->
+        <button v-on:click="code = Math.random()">Generate code</button>
+        <!-- pokazivanje vrednosti -->
+        <p>{{code}}</p>
+    </div>
+
+    <!-- Nacin 2 -->
+    <div id="container1">
+        <!-- onclick generate-->
+        <button v-on:click="sayHallo()">Say Hallo</button>
+        <!-- pokazivanje vrednosti -->
+        <p>{{code1}}</p>
+    </div>
+
+    <script src="vue.js"></script>
+
+    <script>
+        
+
+        var vm = new Vue({
+            el: '#container',
+            data: {
+                code: 0
+            }
+       })
+
+       //Nacin2
+        var vm = new Vue({
+            el: '#container1',
+            data: {
+                code1: 0
+            },
+            methods: {
+                sayHallo: function(){
+                    alert("Hello World");
+                } 
+            }
+       })
+
+    </script>
+  
+</body>
+</html>
