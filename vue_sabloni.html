@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Templates</title>
+</head>
+<body>
+    <div id="container">
+        <div>{{name}}</div>
+        <div>{{email}}</div>
+    </div>
+   
+    <!-- Ako zelimo da u imenu prva slova budu samo velika: -->
+    <div id="container_new">
+        <div> {{ name.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}}</div>
+        <div>{{email}}</div>
+    </div>
+
+
+    <!-- v-text -->
+    <div id="container_new1">
+        <div v-text="name"></div>
+        <div v-text="email"></div>
+        <div v-text="balance"></div>
+    </div>
+    
+
+    <!-- jednosmerno povezivanje v-bind -->
+    <div id="container_new2">
+        <img v-bind:src="thumb_url" alt="user picture">
+        <div v-text="name"></div>
+        <div v-text="email"></div>
+        <div v-text="balance"></div>
+    </div>
+
+
+    <!-- dvosmerno povezivanje -->
+    <div id="container_new3">
+        <input v-model="name" placeholder="enter your name...">
+         
+        <label for="favourite-color">Choose your favourite color:</label>
+        <select v-model="color" id="favourite-color">
+            <option>Maroon</option>
+            <option>Blue</option>
+            <option>Yellow</option>
+            <option>Magenta</option>
+        </select>
+        <!-- ispisivanje vrednosti name i color -->
+        <div>
+            Your name: {{ name }}
+        </div>
+        <div>
+            Your favourite color: {{ color }}
+        </div>
+    </div>
+
+
+    <script src="vue.js"></script>
+
+    <script>
+        //basic
+        var user = {
+            name: "Ben Torrance", email: "ben@gmail.com"
+        };
+        
+        var vm = new Vue({
+            el: '#container',
+            //u data se stavlja varijabla koja poseduje podatke
+            data: user
+        })
+
+
+        //pocetno veliko slovo:
+        var user2 = {
+            name: "Ben Torrance", email: "ben@gmail.com"
+        };
+        
+        var vm = new Vue({
+            el: '#container_new',
+            //u data se stavlja varijabla koja poseduje podatke
+            data: user2
+        })
+
+
+        //v-text
+        var user3 = {
+            name: "Ben Torrance",
+            email: "ben@email.com",
+            balance: 55353.93434
+        };
+        var vm2 = new Vue({
+            el: '#container_new1',
+            data: user3
+        })
+
+
+        //dvosmerno povezivanje
+        var user4 = {
+            name: "Ben Torrance",
+            email: "ben@email.com",
+            balance: 55353.93434,
+            thumb_url: "/img/sdg.png",
+            color: "Blue"
+        };
+        var vm2 = new Vue({
+            el: '#container_new3',
+            data: user4
+        })
+    </script>
+  
+</body>
+</html>
