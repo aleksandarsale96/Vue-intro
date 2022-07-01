@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+
+
+    <div id="container">
+        <!-- tagovi sa nazivom nase komponente -->
+        <my-component></my-component>
+    </div>
+    
+
+
+    <div style="height: 50px;"></div>
+
+
+
+    <div id="container1">
+        <!-- dodajemo name -->
+        <my-component1 name="Ben"></my-component1>
+        <my-component1 name="John"></my-component1>
+        <my-component1 name="Ana"></my-component1>
+    </div>
+
+
+
+    <div style="height: 50px;"></div>
+
+
+
+    <!-- Dinamicko kreiranje -->
+    <div id="container2">
+        <!-- direktiva v-for omogucava obavljanje generisanje odredjenog broja komponenata iz niza-->
+        <!-- v-bind => povezivanje sa svojstvom name-->
+        <!-- bind-key => kako bi mogao da indetifikuje elemente, nije neophodno ali pomaze u manipulaciji, uvek se savetuje da se stavi key -->
+        <my-component2 v-for="user in users" v-bind:name="user.name" v-bind:key="user.id"></my-component2>
+        
+    </div>
+    
+    
+    
+    <!-- Lokalne komponente -->
+    <div id="container3">
+        <my-component3 v-bind:user="user"></my-component3>
+    </div>
+
+
+
+    <script src="vue.js"></script>
+
+
+
+
+    <script>
+
+        //component() => funkcija, prvi parametar naziv komponente a drugi objekat za konfigurisanje vue komponente
+        Vue.component('my-component', {
+            //template => svojstvo koje se koristi za definisanje sablona komponente + (uvecanje vrednosti)
+            template: '<div v-on:click="counter++">{{counter}} : Hello from component. </div>',
+            //data => podatci se definisu unutar funkcije, definisanje lokalnih podataka, svojstvo data 
+            data: function(){
+                return{
+                    counter: 0
+                }
+            }
+        });
+        
+        var vm = new Vue({
+            el: "#container"
+        });
+
+
+
+        
+        //prosledjivanje
+        Vue.component('my-component1', {
+             //prosledjivanje podataka u obliku html atributa:
+            props: ['name'],
+            template: '<div>Hello {{name}} </div>',
+        });
+        
+        var vm1 = new Vue({
+            el: "#container1"
+        });
+
+
+
+        //prosledjivanje bolji nacin, primer globalne komponente,koriscenjem metode Vue.component() i one su dostupne svuda
+        Vue.component('my-component2', {
+             //prosledjivanje podataka u obliku html atributa:
+            props: ['name'],
+            template: '<div>Hello {{name}} </div>',
+        });
+        
+        var vm = new Vue({
+            el: "#container2",
+            data: {
+                users: [
+                    {id: 1, name: "Ben"},
+                    {id: 1, name: "John"},
+                    {id: 1, name: "Ana"}
+
+                ]
+            }
+        });
+
+
+        //lokalne komponente:
+        const MyLocalComponent = {
+            props:['user'],
+            template: `
+            <div class="user-container">
+                <h3>{{user.name}}</h3>
+                <p v-text='user.email'></p>
+                <p v-text='user.balance'></p>
+            </div>    
+            `
+        };
+
+        var data1 = {
+            user: {
+                name: "nikola",
+                email: "nikola@gmail.com",
+                balance: 5124123.4124
+            }
+        };
+
+        let vm2 = new Vue({
+            el: '#container3',
+            components: {
+                'my-component3': MyLocalComponent
+            },
+            data: data1
+        })
+
+    </script>
+  
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+
+    
+    <!-- Lokalne komponente -->
+    <div id="container">
+        <my-component v-bind:user="user"></my-component>
+    </div>
+
+    <div style="height: 50px;"></div>
+
+    <div id="container2">
+        <info-box>This is message 1</info-box>
+    </div>
+
+    <!-- Single file komponente -->
+    <div id="container3"></div>
+
+    
+    <script src="vue.js"></script>
+
+
+
+
+    <script>
+
+
+        //lokalne komponente:
+        const MyLocalComponent = {
+            props:['user'],
+            template: `
+            <div class="user-container">
+                <h3>{{user.name}}</h3>
+                <p v-text='user.email'></p>
+                <p v-text='user.balance'></p>
+                <button v-on:click="sayHello">Say Hello</button>
+            </div>    
+            `,
+            methods: {
+                sayHello: function(){
+                    alert(`Hello ${this.user.name}`);
+                }
+            }
+        };
+
+        var data1 = {
+            user: {
+                name: "Nikola",
+                email: "nikola@gmail.com",
+                balance: 5124123.4124
+            }
+        };
+
+        let vm = new Vue({
+            el: '#container',
+            components: {
+                'my-component': MyLocalComponent
+            },
+            data: data1
+        })
+
+
+
+        Vue.component('info-box', {
+            template: `
+            <div>
+                <strong>Message: </strong>
+                <slot></slot>
+            </div>
+            `                
+        })
+
+        let vm2 = new Vue({
+            el: '#container2',
+        })
+
+    </script>
+  
+</body>
+</html>
